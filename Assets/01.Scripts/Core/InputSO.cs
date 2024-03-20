@@ -9,6 +9,7 @@ public class InputSO : ScriptableObject, IPlayerActions, IUIActions
 
     public event Action<Vector2> OnMovementEvent;
     public event Action<bool> OnFireEvent;
+    public event Action OnDashEvent;
 
     #endregion
     #region Velue Section
@@ -51,6 +52,14 @@ public class InputSO : ScriptableObject, IPlayerActions, IUIActions
         else if (context.canceled)
         {
             OnFireEvent?.Invoke(false);
+        }
+    }
+
+    public void OnDash(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            OnDashEvent?.Invoke();
         }
     }
 

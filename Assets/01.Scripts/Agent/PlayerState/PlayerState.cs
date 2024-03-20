@@ -2,16 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerStateEnum : int
-{
-    Idle,
-    Move,
-    Shoot,
-    Dash
-}
-
-
-public class PlayerState : MonoBehaviour
+public class PlayerState
 {
     protected Agent _agent;
 
@@ -23,13 +14,11 @@ public class PlayerState : MonoBehaviour
     {
 
     }
-    public virtual void UpdateState()
-    {
+    public virtual void UpdateState() { }
 
-    }
 
     public PlayerState(Agent agent)
     {
-        this._agent = agent;
+        _agent = agent;
     }
 }
