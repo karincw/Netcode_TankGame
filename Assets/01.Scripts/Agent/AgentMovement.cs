@@ -1,14 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class AgentMovement : MonoBehaviour
 {
-    private Rigidbody2D _rigidbody;
-    private Vector2 _velocity;
+    [HideInInspector] public Agent Agent;
 
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _speedIncreaseSpeed;
+    private Rigidbody2D _rigidbody;
+
+    #region
+
+    [SerializeField] private float moveSpeed = 20f;
+    [SerializeField] private float maxMoveSpeed = 60f;
+
+    #endregion
+
+    private float _moveDirection = 0;
 
     private void Awake()
     {
@@ -17,19 +23,19 @@ public class AgentMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigidbody.velocity = _velocity;
+        _rigidbody.AddForce(transform.right * moveSpeed, ForceMode2D.Force);
+        _rigidbody.velocity = Vector2.ClampMagnitude(_rigidbody.velocity, maxMoveSpeed);
+        Debug.Log(_rigidbody.velocity);
     }
 
-    private void SetMovement(Vector2 movement)
+    public void SetMove(float dir)
     {
-        Vector2 normalizedVector = movement.normalized;
-        Vector2 applyVector = normalizedVector * _moveSpeed;
-        _velocity = applyVector;
+        _moveDirection = dir;
+
     }
 
-    private void SetRotation(Vector2 direction)
+    public void StopImmediately()
     {
-        transform.forward = direction;
-        //안될수도 있음
+        _rigidbody.velocity = Vector2.zero;
     }
 }

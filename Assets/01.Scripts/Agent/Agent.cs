@@ -5,7 +5,7 @@ using UnityEngine;
 public class Agent : MonoBehaviour
 {
 
-    [HideInInspector] public InputSO Input;
+    public InputSO Input;
     [HideInInspector] public AgentMovement Movement;
     [HideInInspector] public AgentAnimator Animator;
 

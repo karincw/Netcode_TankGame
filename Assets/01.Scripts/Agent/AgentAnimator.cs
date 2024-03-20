@@ -10,9 +10,4 @@ public class AgentAnimator : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
     }
-
-    public void SetAnimation(int Hash, bool state)
-    {
-        _animator.SetBool(Hash, state);
-    }
 }

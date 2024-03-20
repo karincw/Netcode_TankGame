@@ -14,24 +14,22 @@ public enum PlayerStateEnum : int
 public class PlayerState : MonoBehaviour
 {
     protected Agent _agent;
-    private int _animationHash;
 
     public virtual void Enter()
     {
-        _agent.Animator.SetAnimation(_animationHash, true);
+
     }
     public virtual void Exit()
     {
-        _agent.Animator.SetAnimation(_animationHash, false);
+
     }
     public virtual void UpdateState()
     {
 
     }
 
-    public PlayerState(Agent agent, string animHash)
+    public PlayerState(Agent agent)
     {
         this._agent = agent;
-        _animationHash = Animator.StringToHash(animHash);
     }
 }
