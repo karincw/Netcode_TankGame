@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using static PlayerInput;
+using static UnityEngine.InputSystem.InputAction;
 
 [CreateAssetMenu(fileName = "Karin/InputSO")]
 public class InputSO : ScriptableObject, IPlayerActions, IUIActions
@@ -34,16 +35,26 @@ public class InputSO : ScriptableObject, IPlayerActions, IUIActions
 
     #region PlayerAction
 
-    public void OnMovement(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    public void OnMovement(CallbackContext context)
     {
+        //선함쌤한테 가기
+        //move로 바뀌는거에서 이벤트가 한번호출되고 move로 넘어가는데
+        //Move상태에서 이벤트가 실행이안되서 이벤트에 direction이 안바뀌고 그래서 안움직임 ㅇㅇ
+
+        //Debug.Log("EventCall");
         if (context.performed)
         {
+            //Debug.Log("EventInvoke");
             Vector2 movement = context.ReadValue<Vector2>();
             OnMovementEvent?.Invoke(movement);
         }
+        if(context.canceled)
+        {
+            OnMovementEvent?.Invoke(Vector2.zero);
+        }
     }
 
-    public void OnFire(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    public void OnFire(CallbackContext context)
     {
         if (context.performed)
         {

@@ -1,9 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerShootState : PlayerState
+public class PlayerShootState : CanShootingState
 {
-
     public PlayerShootState(Agent agent) : base(agent)
     {
     }
@@ -20,6 +19,6 @@ public class PlayerShootState : PlayerState
 
     public override void UpdateState()
     {
-
+        base.UpdateState();
     }
 }

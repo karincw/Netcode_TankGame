@@ -1,4 +1,4 @@
-public class PlayerDashState : PlayerState
+public class PlayerDashState : CanShootingState
 {
 
     public PlayerDashState(Agent agent) : base(agent)
@@ -17,6 +17,6 @@ public class PlayerDashState : PlayerState
 
     public override void UpdateState()
     {
-
+        base.UpdateState();
     }
 }

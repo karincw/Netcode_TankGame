@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class PlayerMoveState : PlayerState
+public class PlayerMoveState : CanShootingState
 {
-
     public PlayerMoveState(Agent agent) : base(agent)
     {
     }
@@ -12,29 +11,38 @@ public class PlayerMoveState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        _agent.Input.OnMovementEvent += HandleMovementEvent;
+        if (_agent.IsOwner)
+        {
+            _agent.Input.OnMovementEvent += HandleMovementEvent;
+        }
     }
 
     public override void Exit()
     {
-        _agent.Input.OnMovementEvent -= HandleMovementEvent;
+        if (_agent.IsOwner)
+        {
+            _agent.Input.OnMovementEvent -= HandleMovementEvent;
+        }
+        direction = Vector2.zero;
         base.Exit();
     }
 
     public override void UpdateState()
     {
-        _agent.Movement.SetMove(direction);
+        base.UpdateState();
+        _agent.Movement.SetMovement(direction);
     }
 
     private void HandleMovementEvent(Vector2 movement)
     {
+        //Debug.Log("Handle");
         if (movement.sqrMagnitude <= 0.05f)
         {
             _agent.ChangeState(PlayerFSMState.Idle);
         }
         else
         {
-            direction = movement.normalized;
+            direction = movement;
         }
     }
 }

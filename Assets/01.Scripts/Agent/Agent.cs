@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public enum PlayerFSMState
@@ -10,22 +11,28 @@ public enum PlayerFSMState
     Shoot,
 }
 
-public class Agent : MonoBehaviour
+public class Agent : NetworkBehaviour
 {
-
+    [Header("Refs")]
     public InputSO Input;
     [HideInInspector] public AgentMovement Movement;
     [HideInInspector] public AgentAnimator Animator;
+    [HideInInspector] public AgentAttacker Attacker;
 
-    PlayerFSMState myState = PlayerFSMState.Idle;
+    [Header("Settings")]
     private Dictionary<PlayerFSMState, PlayerState> StateMachine = new();
-    private PlayerState currentState;
+    [SerializeField] PlayerFSMState myState = PlayerFSMState.Idle;
+    [SerializeField] private PlayerState currentState;
 
     private void Awake()
     {
         var visualTrm = transform.Find("Visual");
         Movement = GetComponent<AgentMovement>();
+        Movement._agent = this;
         Animator = visualTrm.GetComponent<AgentAnimator>();
+        Animator._agent= this;
+        Attacker = GetComponent<AgentAttacker>();
+        Attacker._agent = this;
 
         foreach (PlayerFSMState stateEnum in Enum.GetValues(typeof(PlayerFSMState)))
         {
