@@ -44,7 +44,7 @@ public class AgentAttacker : MonoBehaviour
     [ServerRpc]
     private void FireServerRpc(Transform fireTrm)
     {
-        var projectile = Instantiate(_clientProjectilePrefab, fireTrm.position, fireTrm.rotation);
+        var projectile = Instantiate(_serverProjectilePrefab, fireTrm.position, fireTrm.rotation);
 
         Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
         Physics2D.IgnoreCollision(_playerCollider, projectileCollider);
